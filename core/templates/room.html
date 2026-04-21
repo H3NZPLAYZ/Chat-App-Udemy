@@ -41,7 +41,11 @@
             {% endfor %}
 
         </div>
-        <form id="chat-form" class="sticky bottom-0 bg-base-100 shadow-xl p-4 rounded-t-xl border-t border-base-300">
+        <form id="chat-form" class="sticky bottom-0 bg-base-100 shadow-xl p-4 rounded-t-xl border-t border-base-300"
+            hx-ext="ws"
+            ws-connect="/ws/chat/{{ room.slug }}/"
+            ws-send
+            >
             <div class="flex gap-1">
                 <input type="text"
                    id="chat-message-input"
