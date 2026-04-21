@@ -11,7 +11,8 @@
         <ul class="mt-2">
             {% for room in rooms %}
                 <li>
-                    <a href="#" class="text-primary hover:text-primary-focus underline text-lg">
+                    <a href="{% url 'room' room.slug %}"
+                       class="text-primary hover:text-primary-focus underline text-lg">
                         {{ room.name }}
                     </a>
                 </li>
