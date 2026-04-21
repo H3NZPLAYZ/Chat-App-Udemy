@@ -124,3 +124,9 @@ AUTH_USER_MODEL = 'core.User'
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ASGI_APPLICATION = "chat_project.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}

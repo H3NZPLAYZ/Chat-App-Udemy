@@ -13,6 +13,8 @@ class ChatConsumer(WebsocketConsumer):
             self.close()
             return
         self.user = self.scope["user"]
+        print(self.channel_layer)
+        print(self.channel_name)
         self.accept()
 
     def get_room(self):
