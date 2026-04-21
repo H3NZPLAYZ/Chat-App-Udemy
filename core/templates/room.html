@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 150)
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
 
 <div class="text-center">
@@ -31,6 +41,20 @@
             {% endfor %}
 
         </div>
+        <form id="chat-form" class="sticky bottom-0 bg-base-100 shadow-xl p-4 rounded-t-xl border-t border-base-300">
+            <div class="flex gap-1">
+                <input type="text"
+                   id="chat-message-input"
+                   name="message"
+                   minlength="2"
+                   class="input input-bordered flex-1"
+                   placeholder="Type your message here..."
+                />
+                <button type="submit" class="btn btn-primary">
+                    Send
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
