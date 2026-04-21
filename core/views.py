@@ -16,8 +16,11 @@ def index(request):
 def room(request, room_slug):
     room = get_object_or_404(Room, slug=room_slug)
 
+    messages = room.messages.all()
+
     context = {
-        'room': room
+        'room': room,
+        'messages': messages,
     }
 
     return render(request, 'room.html', context)
