@@ -6,7 +6,12 @@
             setTimeout(() => {
                 window.scrollTo(0, document.body.scrollHeight);
             }, 150)
+
+            document.body.addEventListener('htmx:wsAfterMessage', function(evt) {
+                window.scrollTo(0, document.body.scrollHeight);
+            });
         });
+
     </script>
 {% endblock %}
 
@@ -20,22 +25,7 @@
         <div id="chat-box" class="flex-1 overflow-y-auto mb-4 card bg-base-100 shadow-lg p-4">
 
             {% for message in messages %}
-                <div class="chat chat-start">
-                  <div class="chat-image avatar">
-                    <div class="w-10 rounded-full">
-                      <img
-                        alt="Tailwind CSS chat bubble component"
-                        src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
-                      />
-                    </div>
-                  </div>
-                  <div class="chat-header">
-                    {{ message.user.username }}
-                    <time class="text-xs opacity-50">{{ message.created_at }}</time>
-                  </div>
-                  <div class="chat-bubble">{{ message.content }}</div>
-                  <div class="chat-footer opacity-50">Delivered</div>
-                </div>
+                {% include 'partials/message.html' %}
             {% empty %}
                 <p class="mt-4 text-xl">There are currently no messages in this room!</p>
             {% endfor %}
