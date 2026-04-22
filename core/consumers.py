@@ -1,6 +1,7 @@
 # chat/consumers.py
 import json
 
+from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from django.template.loader import render_to_string
 from core.models import Room, Message
@@ -12,6 +13,12 @@ class ChatConsumer(WebsocketConsumer):
         if not self.room:
             self.close()
             return
+        self.room_group_name = f"chat_{self.room.name}"
+
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name, self.channel_name
+        )
+
         self.user = self.scope["user"]
         print(self.channel_layer)
         print(self.channel_name)
@@ -25,7 +32,9 @@ class ChatConsumer(WebsocketConsumer):
             return None
 
     def disconnect(self, close_code):
-        pass
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name, self.channel_name
+        )
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -37,5 +46,12 @@ class ChatConsumer(WebsocketConsumer):
         )
 
         context = { 'message': message_obj }
+        text_data = render_to_string('partials/message.html',context)
+        # self.send(text_data=text_data)
 
-        self.send(text_data=render_to_string('partials/message.html', context))
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name, {"type": "chat.message", "message": text_data}
+        )
+
+    def chat_message(self, event):
+        self.send(text_data=event["message"])
