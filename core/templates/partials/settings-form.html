@@ -1,4 +1,8 @@
-<form id="settings-form">
+<form id="settings-form"
+      hx-post="{% url 'settings' %}"
+      hx-swap="outerHTML"
+      hx-encoding="multipart/form-data"
+    >
     {% csrf_token %}
 
     <fieldset class="fieldset">
@@ -31,6 +35,12 @@
       {% endif %}
     </fieldset>
 
+    {% if user.profile_picture %}
+        <div class="mt-4">
+            <p class="mb-2">Your current profile picture</p>
+            <img src="{{ user.profile_picture.url }}" alt="Current profile picture" class="img-thumbnail max-w-52">
+        </div>
+    {% endif %}
 
     <button type="submit" class="btn btn-primary mt-4">
         Submit

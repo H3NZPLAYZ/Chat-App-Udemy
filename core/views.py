@@ -28,7 +28,18 @@ def room(request, room_slug):
 
 @login_required
 def settings(request):
-    context = {
-        'form': UserSettingsForm(instance=request.user),
-    }
-    return render(request, 'settings.html',context)
+    if request.method == 'POST':
+        form = UserSettingsForm(
+            request.POST,
+            request.FILES,
+            instance=request.user
+        )
+        if form.is_valid():
+            form.save()
+            return render(request, 'partials/settings-form.html', {'form': form})
+
+    else:
+        context = {
+            'form': UserSettingsForm(instance=request.user),
+        }
+        return render(request, 'settings.html',context)

@@ -2,10 +2,18 @@
     <div class="chat chat-start">
       <div class="chat-image avatar">
         <div class="w-10 rounded-full">
-          <img
-            alt="Tailwind CSS chat bubble component"
-            src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
-          />
+            {% if not message.user.profile_picture %}
+                <img
+                    alt="Tailwind CSS chat bubble component"
+                    src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                  />
+            {% else %}
+                <img
+                    alt="Current profile picture"
+                    src="{{ message.user.profile_picture.url }}"
+                  />
+            {% endif %}
+
         </div>
       </div>
       <div class="chat-header">
