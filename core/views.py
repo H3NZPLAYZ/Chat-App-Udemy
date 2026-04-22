@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from core.models import Room
+from core.forms import UserSettingsForm
 
 
 # Create your views here.
@@ -24,3 +25,10 @@ def room(request, room_slug):
     }
 
     return render(request, 'room.html', context)
+
+@login_required
+def settings(request):
+    context = {
+        'form': UserSettingsForm(instance=request.user),
+    }
+    return render(request, 'settings.html',context)

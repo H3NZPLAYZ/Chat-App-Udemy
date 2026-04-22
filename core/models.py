@@ -4,6 +4,7 @@ from django_extensions.db.fields import AutoSlugField
 
 
 class User(AbstractUser):
+    profile_picture = models.ImageField(upload_to='profilepics/', null=True, blank=True)
     pass
 
 
